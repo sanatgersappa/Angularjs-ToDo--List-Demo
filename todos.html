@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html ng-app>
+	<head>
+		<title>To Do List</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
+	</head>
+	<body ng-controller="ToDoListCtrl">
+		<div class="main">
+			<div class="content">
+				<h1>ToDo List</h1>
+				<form ng-submit="addToDo()">
+					<input placeholder="What needs to be done?" class="input" ng-model="newToDo" />
+				</form>
+				<div>{{(toDos | filter:isDone == false).length}} remaining</div>
+				<hr />
+				<input id="allDone" type="checkbox" ng-click="allDone()" />Mark all as Done
+				<hr />
+				<ul>
+					<li ng-repeat="toDo in toDos" ng-class="toDo.isDone && 'done' || 'notdone'">
+						<input type="checkbox" ng-click="toDo.isDone = !toDo.isDone" ng-checked="toDo.isDone" /> {{toDo.desc}}
+					</li>
+
+                </ul>
+				<button ng-click="removeDone()">Clear todos done</button>
+			</div>
+		</div>
+		<script type="text/javascript">
+		function ToDoListCtrl($scope) {
+			$scope.markAllDone = true;
+
+			$scope.toDos = [
+				{desc: 'Fetch Milk', isDone: false},
+				{desc: 'Get Newspaper', isDone: true}
+			];
+	
+			$scope.allDone = function() {
+				angular.forEach($scope.toDos, function(toDo) {
+					toDo.isDone = $scope.markAllDone;
+				});
+				$scope.markAllDone = !$scope.markAllDone;
+			};
+
+			$scope.removeDone = function() {
+				var newToDos = [];
+				angular.forEach($scope.toDos, function(toDo) {
+					if (!toDo.isDone) {
+						newToDos.push(toDo);
+					}
+				});
+				$scope.toDos = newToDos;
+			};
+
+			$scope.addToDo = function() {
+				if ($scope.newToDo !== '') {
+					$scope.toDos.push({desc: $scope.newToDo, isDone: false});
+					$scope.newToDo = '';
+				}
+			};
+		}
+		</script>
+	</body>
+</html>
