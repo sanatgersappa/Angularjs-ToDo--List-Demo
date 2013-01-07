@@ -3,7 +3,6 @@
 	<head>
 		<title>To Do List</title>
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
-		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
 	</head>
 	<body ng-controller="ToDoListCtrl">
 		<div class="main">
@@ -25,13 +24,14 @@
 				<button ng-click="removeDone()">Clear todos done</button>
 			</div>
 		</div>
+		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
 		<script type="text/javascript">
 		function ToDoListCtrl($scope) {
 			$scope.markAllDone = true;
 
 			$scope.toDos = [
 				{desc: 'Fetch Milk', isDone: false},
-				{desc: 'Get Newspaper', isDone: true}
+				{desc: 'Get Newspaper', isDone: true},
 			];
 	
 			$scope.allDone = function() {
